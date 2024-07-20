@@ -10,6 +10,7 @@ public class FollowerUpdater : MonoBehaviour
     
     List<RecordedTransform> recordedTransforms = new();
     WaitForSeconds indexWait;
+    Coroutine delayRoutine;
     
     int transformIndex;
     bool canUpdate;
@@ -33,12 +34,18 @@ public class FollowerUpdater : MonoBehaviour
         transform.rotation = recorder.transform.rotation;
 
         indexWait = new WaitForSeconds(index * followerDelay);
-        StartCoroutine(UpdateRoutine());
+        delayRoutine = StartCoroutine(UpdateRoutine());
     }
 
     void HandleNewRecordCreated (RecordedTransform recordedTransform) => recordedTransforms.Add(recordedTransform);
 
-    void HandlePlayerDeath () => canUpdate = false;
+    void HandlePlayerDeath ()
+    {
+        canUpdate = false;
+        
+        if (delayRoutine != null)
+            StopCoroutine(delayRoutine);
+    }
 
     IEnumerator UpdateRoutine ()
     {

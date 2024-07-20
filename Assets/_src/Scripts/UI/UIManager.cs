@@ -32,7 +32,7 @@ public class UIManager : MonoBehaviour
         playerDeathbox.OnPlayerDeath += HandlePlayerDeath;
         playerInput.CanInput = false;
         timerWait = new WaitForSeconds(timerDelay);
-        timerText.text = points.ToString();
+        pointsText.text = points.ToString();
     }
 
     void Update ()
