@@ -1,9 +1,9 @@
+using System.Collections;
 using UnityEngine;
 
 public class CarController : MonoBehaviour
 {
     [SerializeField] float forwardSpeed;
-    [SerializeField] float backwardsSpeed;
     [SerializeField] float rotationSpeed;
     [SerializeField] float steeringSpeed;
     [SerializeField] float steerVelocityWeight;
@@ -17,25 +17,43 @@ public class CarController : MonoBehaviour
     [SerializeField] float castRadius;
 
     float steeringInput;
+    float accelerationInput;
     bool isGrounded;
+
+    float speedMultiplier = 1;
+    WaitForSeconds multiplierDuration;
+    Coroutine speedMultiplierRoutine;
 
     Rigidbody _rigidbody;
 
-    void Awake()
+    void Awake ()
     {
         _rigidbody = GetComponent<Rigidbody>();
     }
 
-    void FixedUpdate()
+    void FixedUpdate ()
     {
         CheckGround();
         Accelerate();
         Turn();
     }
-    
-    public void SetSteeringInput(float value) => steeringInput = value;
 
-    void CheckGround()
+    public void SetAccelerationInput (float value) => accelerationInput = value;
+    
+    public void SetSteeringInput (float value) => steeringInput = value;
+    
+    public void SetAccelerationMultiplier (float multiplier, float duration)
+    {
+        if (speedMultiplierRoutine != null)
+            StopCoroutine(speedMultiplierRoutine);
+        
+        multiplierDuration ??= new WaitForSeconds(duration);
+        speedMultiplier = multiplier;
+        
+        speedMultiplierRoutine = StartCoroutine(ResetMultiplier());
+    }
+
+    void CheckGround ()
     {
         isGrounded = false;
         _rigidbody.drag = airDrag;
@@ -56,7 +74,7 @@ public class CarController : MonoBehaviour
         if (!isGrounded)
             return;
         
-        Vector3 targetSpeed = forwardSpeed * transform.forward;
+        Vector3 targetSpeed = accelerationInput * forwardSpeed * speedMultiplier * transform.forward;
         _rigidbody.AddForce(targetSpeed, ForceMode.Acceleration);
     }
 
@@ -70,6 +88,13 @@ public class CarController : MonoBehaviour
         targetTurn = Mathf.Clamp(targetTurn, -(steeringSpeed * Mathf.Abs(steeringInput)), steeringSpeed * Mathf.Abs(steeringInput)); 
         
         transform.rotation = Quaternion.Euler(transform.eulerAngles + new Vector3(0f, targetTurn, 0f));
+    }
+    
+    IEnumerator ResetMultiplier ()
+    {
+        yield return multiplierDuration;
+        speedMultiplier = 1f;
+        speedMultiplierRoutine = null;
     }
 
     void OnDrawGizmosSelected()
