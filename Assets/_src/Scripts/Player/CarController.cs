@@ -38,6 +38,8 @@ public class CarController : MonoBehaviour
         Turn();
     }
 
+    public void StopMovement () => _rigidbody.velocity = Vector3.zero;
+
     public void SetAccelerationInput (float value) => accelerationInput = value;
     
     public void SetSteeringInput (float value) => steeringInput = value;

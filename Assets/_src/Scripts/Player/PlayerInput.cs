@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
+    public bool CanInput { get; set; }
+    
     CarController controller;
     FollowerRecorder followerRecorder;
 
@@ -13,6 +15,9 @@ public class PlayerInput : MonoBehaviour
 
     void Update ()
     {
+        if (!CanInput)
+            return;
+        
         float acceleration = 1f;
         float steering = Input.GetAxis("Horizontal");
         controller.SetAccelerationInput(acceleration);

@@ -12,6 +12,13 @@ public class FollowerRecorder : MonoBehaviour
 
     int followerCount = 0;
     bool canRecord;
+    
+    PlayerDeathbox playerDeathbox;
+
+    void Awake ()
+    {
+        playerDeathbox = GetComponentInChildren<PlayerDeathbox>();
+    }
 
     void FixedUpdate ()
     {
@@ -24,12 +31,16 @@ public class FollowerRecorder : MonoBehaviour
 
     public void StartRecording () => canRecord = true;
 
-    public void StopRecording () => canRecord = false;
+    public void StopRecording ()
+    {
+        Debug.Log($"stop recording");
+        canRecord = false;
+    }
 
     public void CreateFollower ()
     {
         followerCount++;
         FollowerUpdater newFollower = Instantiate(followerPrefab, followerContainer);
-        newFollower.SetupFollower(this, followerCount);
+        newFollower.SetupFollower(this, followerCount, playerDeathbox);
     }
 }

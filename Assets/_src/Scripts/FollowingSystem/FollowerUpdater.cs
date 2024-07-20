@@ -10,7 +10,7 @@ public class FollowerUpdater : MonoBehaviour
     List<RecordedTransform> recordedTransforms = new();
     WaitForSeconds indexWait;
     
-    int transformIndex = 0;
+    int transformIndex;
     bool canUpdate;
 
     void FixedUpdate ()
@@ -23,9 +23,10 @@ public class FollowerUpdater : MonoBehaviour
         transformIndex++;
     }
 
-    public void SetupFollower (FollowerRecorder recorder, int index)
+    public void SetupFollower (FollowerRecorder recorder, int index, PlayerDeathbox playerDeathbox)
     {
         recorder.OnNewRecordCreated += HandleNewRecordCreated;
+        playerDeathbox.OnPlayerDeath += HandlePlayerDeath;
         
         transform.position = recorder.transform.position;
         transform.rotation = recorder.transform.rotation;
@@ -35,6 +36,12 @@ public class FollowerUpdater : MonoBehaviour
     }
 
     void HandleNewRecordCreated (RecordedTransform recordedTransform) => recordedTransforms.Add(recordedTransform);
+
+    void HandlePlayerDeath ()
+    {
+        Debug.Log($"stop following");
+        canUpdate = false;
+    }
 
     IEnumerator UpdateRoutine ()
     {
