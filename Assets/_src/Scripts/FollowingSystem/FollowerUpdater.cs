@@ -8,46 +8,37 @@ public class FollowerUpdater : MonoBehaviour
     [SerializeField] float followerDelay;
     
     List<RecordedTransform> recordedTransforms = new();
-    WaitForSeconds routineWait;
     WaitForSeconds indexWait;
+    
+    int transformIndex = 0;
+    bool canUpdate;
 
-    public void SetupFollower (FollowerRecorder recorder, int index, float updateInterval, float routineInterval)
+    void FixedUpdate ()
+    {
+        if (!canUpdate)
+            return;
+        
+        transform.position = recordedTransforms[transformIndex].Position;
+        transform.rotation = recordedTransforms[transformIndex].Rotation;
+        transformIndex++;
+    }
+
+    public void SetupFollower (FollowerRecorder recorder, int index)
     {
         recorder.OnNewRecordCreated += HandleNewRecordCreated;
         
         transform.position = recorder.transform.position;
         transform.rotation = recorder.transform.rotation;
 
-        routineWait = new WaitForSeconds(routineInterval);
         indexWait = new WaitForSeconds(index * followerDelay);
-        StartCoroutine(UpdateRoutine(updateInterval, routineInterval));
+        StartCoroutine(UpdateRoutine());
     }
 
     void HandleNewRecordCreated (RecordedTransform recordedTransform) => recordedTransforms.Add(recordedTransform);
 
-    IEnumerator UpdateRoutine (float updateInterval, float routineInterval)
+    IEnumerator UpdateRoutine ()
     {
         yield return indexWait;
-        
-        float timer = 0f;
-        int transformIndex = 0;
-
-        while (true)
-        {
-            timer += routineInterval;
-            if (timer <= updateInterval)
-            {
-                if (routineInterval > 0)
-                    yield return routineWait;
-                else
-                    yield return null;
-            }
-
-            transform.position = recordedTransforms[transformIndex].Position;
-            transform.rotation = recordedTransforms[transformIndex].Rotation;
-            timer = 0f;
-            transformIndex++;
-            yield return null;
-        }
+        canUpdate = true;
     }
 }
