@@ -12,6 +12,6 @@ public class BoostCollectable : BaseCollectable
         if (playerCar == null)
             playerCar = player.GetComponent<CarController>();
 
-        playerCar.SetAccelerationMultiplier(speedMultiplier, duration);
+        playerCar.SetMovementMultiplier(speedMultiplier, duration);
     }
 }

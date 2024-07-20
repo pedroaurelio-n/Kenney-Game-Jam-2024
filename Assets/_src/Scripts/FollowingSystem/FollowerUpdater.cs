@@ -39,7 +39,7 @@ public class FollowerUpdater : MonoBehaviour
 
     void HandleNewRecordCreated (RecordedTransform recordedTransform) => recordedTransforms.Add(recordedTransform);
 
-    void HandlePlayerDeath ()
+    void HandlePlayerDeath (bool _)
     {
         canUpdate = false;
         

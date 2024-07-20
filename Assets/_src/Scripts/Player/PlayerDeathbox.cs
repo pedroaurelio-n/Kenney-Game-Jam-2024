@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlayerDeathbox : MonoBehaviour
 {
-    public event Action OnPlayerDeath;
+    public event Action<bool> OnPlayerDeath;
     
     PlayerInput playerInput;
     FollowerRecorder followerRecorder;
@@ -16,9 +16,11 @@ public class PlayerDeathbox : MonoBehaviour
         carController = GetComponentInParent<CarController>();
     }
 
-    void OnTriggerEnter (Collider other)
+    void OnTriggerEnter (Collider other) => KillPlayer(true);
+
+    public void KillPlayer (bool collision)
     {
-        OnPlayerDeath?.Invoke();
+        OnPlayerDeath?.Invoke(collision);
         playerInput.CanInput = false;
         followerRecorder.StopRecording();
         carController.StopMovement();

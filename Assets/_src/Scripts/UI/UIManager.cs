@@ -2,9 +2,13 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    const string HIGH_SCORE_KEY = "HighScore";
+    
     [SerializeField] PlayerInput playerInput;
     [SerializeField] PlayerDeathbox playerDeathbox;
     
@@ -15,24 +19,33 @@ public class UIManager : MonoBehaviour
     [SerializeField] float timerDelay;
 
     [Header("HUD")]
+    [SerializeField] TimeManager timeManager;
+    [SerializeField] GameObject hudObject;
     [SerializeField] GameObject arrowDirection;
-    [SerializeField] GameObject pointHud;
-    [SerializeField] TextMeshProUGUI pointsText;
+    [SerializeField] TextMeshProUGUI pointsHudText;
+    [SerializeField] TextMeshProUGUI highScoreHudText;
     
     [Header("Game Over")]
     [SerializeField] GameObject gameOverObject;
+    [SerializeField] GameObject deathByCollisionText;
+    [SerializeField] GameObject deathByTimeText;
+    [SerializeField] TextMeshProUGUI pointsOverText;
+    [SerializeField] TextMeshProUGUI highScoreOverText;
 
     WaitForSeconds timerWait;
     Coroutine countdownRoutine;
 
     int points;
+    int currentHighScore;
 
     void Start ()
     {
         playerDeathbox.OnPlayerDeath += HandlePlayerDeath;
         playerInput.CanInput = false;
         timerWait = new WaitForSeconds(timerDelay);
-        pointsText.text = points.ToString();
+        pointsHudText.text = points.ToString();
+        currentHighScore = PlayerPrefs.GetInt(HIGH_SCORE_KEY);
+        highScoreHudText.text = currentHighScore.ToString();
     }
 
     void Update ()
@@ -45,22 +58,39 @@ public class UIManager : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.Return))
             UpdatePoints(1);
+        
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+            PlayerPrefs.DeleteKey(HIGH_SCORE_KEY);
     }
 
     public void UpdatePoints (int point)
     {
         points += point;
-        pointsText.text = points.ToString();
+        int actualHighScore = points > currentHighScore ? points : currentHighScore;
+        pointsHudText.text = points.ToString();
+        highScoreHudText.text = actualHighScore.ToString();
     }
 
-    void HandlePlayerDeath ()
+    void HandlePlayerDeath (bool deathByCollision)
     {
         if (gameOverObject.activeInHierarchy)
             return;
         
-        gameOverObject.SetActive(true);
-        pointHud.SetActive(false);
+        hudObject.SetActive(false);
         arrowDirection.SetActive(false);
+        
+        currentHighScore = PlayerPrefs.GetInt(HIGH_SCORE_KEY);
+        if (points > currentHighScore)
+        {
+            PlayerPrefs.SetInt(HIGH_SCORE_KEY, points);
+            currentHighScore = points;
+        }
+        
+        gameOverObject.SetActive(true);
+        deathByCollisionText.SetActive(deathByCollision);
+        deathByTimeText.SetActive(!deathByCollision);
+        pointsOverText.text = points.ToString();
+        highScoreOverText.text = currentHighScore.ToString();
     }
 
     IEnumerator CountdownRoutine ()
@@ -85,7 +115,8 @@ public class UIManager : MonoBehaviour
         yield return timerWait;
         
         timerText.gameObject.SetActive(false);
-        pointHud.SetActive(true);
+        hudObject.SetActive(true);
         arrowDirection.SetActive(true);
+        timeManager.StartTimer();
     }
 }
