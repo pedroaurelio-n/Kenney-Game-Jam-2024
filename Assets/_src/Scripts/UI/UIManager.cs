@@ -14,17 +14,25 @@ public class UIManager : MonoBehaviour
     [SerializeField] float timerCountdown;
     [SerializeField] float timerDelay;
 
+    [Header("HUD")]
+    [SerializeField] GameObject arrowDirection;
+    [SerializeField] GameObject pointHud;
+    [SerializeField] TextMeshProUGUI pointsText;
+    
     [Header("Game Over")]
     [SerializeField] GameObject gameOverObject;
 
     WaitForSeconds timerWait;
     Coroutine countdownRoutine;
 
+    int points;
+
     void Start ()
     {
         playerDeathbox.OnPlayerDeath += HandlePlayerDeath;
         playerInput.CanInput = false;
         timerWait = new WaitForSeconds(timerDelay);
+        timerText.text = points.ToString();
     }
 
     void Update ()
@@ -34,6 +42,15 @@ public class UIManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        
+        if (Input.GetKeyDown(KeyCode.Return))
+            UpdatePoints(1);
+    }
+
+    public void UpdatePoints (int point)
+    {
+        points += point;
+        pointsText.text = points.ToString();
     }
 
     void HandlePlayerDeath ()
@@ -42,6 +59,8 @@ public class UIManager : MonoBehaviour
             return;
         
         gameOverObject.SetActive(true);
+        pointHud.SetActive(false);
+        arrowDirection.SetActive(false);
     }
 
     IEnumerator CountdownRoutine ()
@@ -66,6 +85,7 @@ public class UIManager : MonoBehaviour
         yield return timerWait;
         
         timerText.gameObject.SetActive(false);
-        countdownRoutine = null;
+        pointHud.SetActive(true);
+        arrowDirection.SetActive(true);
     }
 }

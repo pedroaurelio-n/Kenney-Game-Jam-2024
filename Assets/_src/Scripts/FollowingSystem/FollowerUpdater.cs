@@ -6,6 +6,7 @@ using UnityEngine;
 public class FollowerUpdater : MonoBehaviour
 {
     [SerializeField] float followerDelay;
+    [SerializeField] BoxCollider collider;
     
     List<RecordedTransform> recordedTransforms = new();
     WaitForSeconds indexWait;
@@ -42,6 +43,7 @@ public class FollowerUpdater : MonoBehaviour
     IEnumerator UpdateRoutine ()
     {
         yield return indexWait;
+        collider.enabled = true;
         canUpdate = true;
     }
 }

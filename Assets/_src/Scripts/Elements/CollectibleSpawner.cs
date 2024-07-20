@@ -5,6 +5,11 @@ using Random = UnityEngine.Random;
 
 public class CollectibleSpawner : MonoBehaviour
 {
+    [Header("References")]
+    [SerializeField] DirectionArrow directionArrow;
+
+    [SerializeField] UIManager uiManager;
+    
     [Header("Point")]
     [SerializeField] PointCollectable pointPrefab;
     [SerializeField] Transform[] pointSpawnPositions;
@@ -25,11 +30,14 @@ public class CollectibleSpawner : MonoBehaviour
         Transform spawnPoint = pointSpawnPositions[Random.Range(0, pointSpawnPositions.Length)];
         pointObject.transform.position = spawnPoint.position;
         pointObject.gameObject.SetActive(true);
+        directionArrow.UpdateTarget(pointObject.transform);
     }
 
-    void HandlePointCollected ()
+    void HandlePointCollected (int point)
     {
         pointObject.gameObject.SetActive(false);
+        directionArrow.UpdateTarget(null);
+        uiManager.UpdatePoints(point);
         StartCoroutine(WaitForCollectibleSpawn(SpawnType.Point, pointSpawnInterval));
     }
 

@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 954923234961249453}
   - component: {fileID: 6613890142054650658}
-  m_Layer: 0
+  - component: {fileID: 3393693816573501991}
+  m_Layer: 8
   m_Name: PlayerFollower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,7 +47,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followerDelay: 0.15
-  interpolationSpeed: 50
+  collider: {fileID: 3393693816573501991}
+--- !u!65 &3393693816573501991
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1433524655054242941}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 0.41, y: 1, z: 1.29}
+  m_Center: {x: 0, y: 0.54, z: 0}
 --- !u!1001 &8063809696965672909
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -109,10 +123,45 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7948660828100032839, guid: 4daa0178111c99549b1bbb774d62c217,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -4819223349682164798, guid: 4daa0178111c99549b1bbb774d62c217,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -3664811705211809293, guid: 4daa0178111c99549b1bbb774d62c217,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 4daa0178111c99549b1bbb774d62c217,
         type: 3}
       propertyPath: m_Name
       value: sedan-sports
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 4daa0178111c99549b1bbb774d62c217,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2073144646944985114, guid: 4daa0178111c99549b1bbb774d62c217,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2397621468118695034, guid: 4daa0178111c99549b1bbb774d62c217,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7752030738778784939, guid: 4daa0178111c99549b1bbb774d62c217,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4daa0178111c99549b1bbb774d62c217, type: 3}

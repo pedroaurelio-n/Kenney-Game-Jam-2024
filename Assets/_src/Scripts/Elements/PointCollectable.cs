@@ -3,7 +3,9 @@ using UnityEngine;
 
 public class PointCollectable : BaseCollectable
 {
-    public event Action OnPointCollected;
+    public event Action<int> OnPointCollected;
+    
+    [SerializeField] int value;
 
     FollowerRecorder followerRecorder;
     
@@ -12,8 +14,10 @@ public class PointCollectable : BaseCollectable
         if (followerRecorder == null)
             followerRecorder = player.GetComponent<FollowerRecorder>();
         
-        OnPointCollected?.Invoke();
+        OnPointCollected?.Invoke(value);
         followerRecorder.StartRecording();
-        followerRecorder.CreateFollower();
+
+        for (int i = 0; i < value; i++)
+            followerRecorder.CreateFollower();
     }
 }

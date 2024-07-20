@@ -38,7 +38,11 @@ public class CarController : MonoBehaviour
         Turn();
     }
 
-    public void StopMovement () => _rigidbody.velocity = Vector3.zero;
+    public void StopMovement ()
+    {
+        _rigidbody.velocity = Vector3.zero;
+        _rigidbody.constraints = RigidbodyConstraints.FreezeAll;
+    }
 
     public void SetAccelerationInput (float value) => accelerationInput = value;
     
