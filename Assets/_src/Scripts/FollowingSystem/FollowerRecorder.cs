@@ -31,11 +31,7 @@ public class FollowerRecorder : MonoBehaviour
 
     public void StartRecording () => canRecord = true;
 
-    public void StopRecording ()
-    {
-        Debug.Log($"stop recording");
-        canRecord = false;
-    }
+    public void StopRecording () => canRecord = false;
 
     public void CreateFollower ()
     {

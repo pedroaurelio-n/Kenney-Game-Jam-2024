@@ -37,11 +37,7 @@ public class FollowerUpdater : MonoBehaviour
 
     void HandleNewRecordCreated (RecordedTransform recordedTransform) => recordedTransforms.Add(recordedTransform);
 
-    void HandlePlayerDeath ()
-    {
-        Debug.Log($"stop following");
-        canUpdate = false;
-    }
+    void HandlePlayerDeath () => canUpdate = false;
 
     IEnumerator UpdateRoutine ()
     {
