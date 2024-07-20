@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6159632049560122575}
   - component: {fileID: 6159632049560122574}
   - component: {fileID: 6159632049560122573}
+  - component: {fileID: 4074724185905857423}
   m_Layer: 0
   m_Name: PointCollectible
   m_TagString: Untagged
@@ -49,6 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   value: 3
   timeToAdd: 10
+  collectedSfx: {fileID: 4074724185905857423}
 --- !u!135 &6159632049560122574
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -77,6 +79,28 @@ MonoBehaviour:
   rotationDirection: {x: 0, y: 360, z: 0}
   rotationSpeed: 400
   easing: 4
+--- !u!114 &4074724185905857423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6159632049560122572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c860b8ba7a3021a47b256205d39b632b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clipSO: {fileID: 11400000, guid: 21f2a3fe0abf31e41a39ba0a06b5782a, type: 2}
+  playOnStart: 0
+  playOnNextEnable: 0
+  stopOnDisable: 0
+  fadeInDuration: 0
+  fadeOutDuration: 0
+  playLoop: 0
+  loopInterval: 0.1
+  delayRange: {x: 0, y: 0}
+  objectToFollow: {fileID: 0}
 --- !u!1001 &6159632048863356051
 PrefabInstance:
   m_ObjectHideFlags: 0

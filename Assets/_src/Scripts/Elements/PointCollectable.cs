@@ -1,4 +1,5 @@
 using System;
+using PedroAurelio.AudioSystem;
 using UnityEngine;
 
 public class PointCollectable : BaseCollectable
@@ -7,6 +8,7 @@ public class PointCollectable : BaseCollectable
     
     [SerializeField] int value;
     [SerializeField] float timeToAdd;
+    [SerializeField] PlayAudioEvent collectedSfx;
 
     FollowerRecorder followerRecorder;
     
@@ -15,6 +17,7 @@ public class PointCollectable : BaseCollectable
         if (followerRecorder == null)
             followerRecorder = player.GetComponent<FollowerRecorder>();
         
+        collectedSfx.PlayAudio();
         OnPointCollected?.Invoke(value, timeToAdd);
         followerRecorder.StartRecording();
 

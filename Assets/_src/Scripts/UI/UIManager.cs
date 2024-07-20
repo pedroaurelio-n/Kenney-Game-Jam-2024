@@ -1,9 +1,8 @@
 using System.Collections;
+using PedroAurelio.AudioSystem;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
-using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -11,6 +10,7 @@ public class UIManager : MonoBehaviour
     
     [SerializeField] PlayerInput playerInput;
     [SerializeField] PlayerDeathbox playerDeathbox;
+    [SerializeField] PlayAudioEvent music;
     
     [Header("Main Menu")]
     [SerializeField] GameObject mainMenuObject;
@@ -40,8 +40,9 @@ public class UIManager : MonoBehaviour
 
     void Start ()
     {
+        music.PlayAudio();
         playerDeathbox.OnPlayerDeath += HandlePlayerDeath;
-        playerInput.CanInput = false;
+        playerInput.SetInput(false);
         timerWait = new WaitForSeconds(timerDelay);
         pointsHudText.text = points.ToString();
         currentHighScore = PlayerPrefs.GetInt(HIGH_SCORE_KEY);
@@ -76,6 +77,7 @@ public class UIManager : MonoBehaviour
         if (gameOverObject.activeInHierarchy)
             return;
         
+        music.StopAudio();
         hudObject.SetActive(false);
         arrowDirection.SetActive(false);
         
@@ -108,7 +110,7 @@ public class UIManager : MonoBehaviour
             timerText.text = Mathf.Max(0, Mathf.CeilToInt(timer)).ToString();
 
             if (timer <= 0)
-                playerInput.CanInput = true;
+                playerInput.SetInput(true);
             yield return null;
         }
         

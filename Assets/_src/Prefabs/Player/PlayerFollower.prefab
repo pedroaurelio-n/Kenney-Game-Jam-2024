@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followerDelay: 0.15
-  collider: {fileID: 3393693816573501991}
+  _collider: {fileID: 3393693816573501991}
 --- !u!65 &3393693816573501991
 BoxCollider:
   m_ObjectHideFlags: 0

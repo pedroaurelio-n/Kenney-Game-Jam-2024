@@ -1,11 +1,14 @@
+using PedroAurelio.AudioSystem;
 using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
-    public bool CanInput { get; set; }
-    
+    [SerializeField] PlayAudioEvent engineAudio;
+
     CarController controller;
     FollowerRecorder followerRecorder;
+
+    bool canInput;
 
     void Awake ()
     {
@@ -15,7 +18,7 @@ public class PlayerInput : MonoBehaviour
 
     void Update ()
     {
-        if (!CanInput)
+        if (!canInput)
             return;
         
         float acceleration = 1f;
@@ -25,5 +28,11 @@ public class PlayerInput : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.Return))
             followerRecorder.CreateFollower();
+    }
+
+    public void SetInput (bool active)
+    {
+        canInput = active;
+        engineAudio.gameObject.SetActive(active);
     }
 }

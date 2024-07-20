@@ -17,10 +17,18 @@ public class CollectibleSpawner : MonoBehaviour
     [SerializeField] Vector2 pointSpawnInterval;
     [SerializeField] int bonusSpawnInterval;
 
+    [Header("Boost")]
+    [SerializeField] BoostCollectable boostPrefab;
+    [SerializeField] Transform[] boostSpawnPositions;
+    [SerializeField] Vector2 boostSpawnInterval;
+
     PointCollectable pointObject;
     PointCollectable bonusObject;
     PointCollectable currentPoint;
     int spawnIndex;
+
+    BoostCollectable boostObject1;
+    BoostCollectable boostObject2;
 
     void Start ()
     {
@@ -29,8 +37,14 @@ public class CollectibleSpawner : MonoBehaviour
         
         bonusObject = Instantiate(bonusPrefab, transform);
         bonusObject.OnPointCollected += HandlePointCollected;
-        
+
+        boostObject1 = Instantiate(boostPrefab, transform);
+        boostObject2 = Instantiate(boostPrefab, transform);
+        boostObject1.gameObject.SetActive(false);
+        boostObject2.gameObject.SetActive(false);
+
         SpawnPoint();
+        StartCoroutine(SpawnBoostRoutine());
     }
 
     void SpawnPoint ()
@@ -44,6 +58,13 @@ public class CollectibleSpawner : MonoBehaviour
         directionArrow.UpdateTarget(currentPoint.transform);
         spawnIndex++;
     }
+    
+    void SpawnBoost (BoostCollectable boostObject)
+    {
+        Transform spawnPoint = boostSpawnPositions[Random.Range(0, boostSpawnPositions.Length)];
+        boostObject.transform.position = spawnPoint.position;
+        boostObject.gameObject.SetActive(true);
+    }
 
     void HandlePointCollected (int point, float timeToAdd)
     {
@@ -51,12 +72,12 @@ public class CollectibleSpawner : MonoBehaviour
         directionArrow.UpdateTarget(null);
         uiManager.UpdatePoints(point);
         timeManager.AddTime(timeToAdd);
-        StartCoroutine(WaitForCollectibleSpawn(SpawnType.Point, pointSpawnInterval));
+        StartCoroutine(WaitForCollectibleSpawn(SpawnType.Point));
     }
 
-    IEnumerator WaitForCollectibleSpawn (SpawnType type, Vector2 interval)
+    IEnumerator WaitForCollectibleSpawn (SpawnType type)
     {
-        yield return new WaitForSeconds(Random.Range(interval.x, interval.y));
+        yield return new WaitForSeconds(Random.Range(pointSpawnInterval.x, pointSpawnInterval.y));
 
         switch (type)
         {
@@ -65,6 +86,24 @@ public class CollectibleSpawner : MonoBehaviour
                 break;
             case SpawnType.Boost:
                 break;
+        }
+    }
+
+    IEnumerator SpawnBoostRoutine ()
+    {
+        while (true)
+        {
+            Reset:
+            yield return new WaitForSeconds(Random.Range(boostSpawnInterval.x, boostSpawnInterval.y));
+            
+            if (!boostObject1.gameObject.activeInHierarchy)
+            {
+                SpawnBoost(boostObject1);
+                goto Reset;
+            }
+            
+            if (!boostObject2.gameObject.activeInHierarchy)
+                SpawnBoost(boostObject2);
         }
     }
 

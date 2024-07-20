@@ -21,7 +21,7 @@ public class PlayerDeathbox : MonoBehaviour
     public void KillPlayer (bool collision)
     {
         OnPlayerDeath?.Invoke(collision);
-        playerInput.CanInput = false;
+        playerInput.SetInput(false);
         followerRecorder.StopRecording();
         carController.StopMovement();
     }
