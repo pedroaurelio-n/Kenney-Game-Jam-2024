@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 36d03ba86702a1143a6ced611587974e
+guid: 12a0b4ad52eb92d439f16345a8d01b04
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
@@ -7,8 +7,23 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: pavement
-    second: {fileID: 2100000, guid: 03f31b85a9236f545bf0935be14c9bb3, type: 2}
+      name: _defaultMat
+    second: {fileID: 2100000, guid: ecaeef11665bc7a49804a2df7e725dcd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: border
+    second: {fileID: 2100000, guid: 3266997e9e55d1c42948a05990f125dc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: door
+    second: {fileID: 2100000, guid: 3266997e9e55d1c42948a05990f125dc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: window
+    second: {fileID: 2100000, guid: b708dbaf86a86494286c9e6a53688aae, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

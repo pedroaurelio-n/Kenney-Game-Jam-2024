@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: 3
-  timeToAdd: 8
+  timeToAdd: 10
 --- !u!135 &6159632049560122574
 SphereCollider:
   m_ObjectHideFlags: 0
