@@ -52,7 +52,10 @@ public class CollectibleSpawner : MonoBehaviour
         bool spawnBonus = spawnIndex > 0 && spawnIndex % bonusSpawnInterval == 0;
         currentPoint = spawnBonus ? bonusObject : pointObject;
         
-        Transform spawnPoint = pointSpawnPositions[Random.Range(0, pointSpawnPositions.Length)];
+        Transform spawnPoint = spawnIndex == 0 
+            ? pointSpawnPositions[0] 
+            : pointSpawnPositions[Random.Range(0, pointSpawnPositions.Length)];
+        
         currentPoint.transform.position = spawnPoint.position;
         currentPoint.gameObject.SetActive(true);
         directionArrow.UpdateTarget(currentPoint.transform);

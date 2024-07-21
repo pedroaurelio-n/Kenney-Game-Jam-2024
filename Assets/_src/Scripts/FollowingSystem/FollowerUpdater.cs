@@ -2,11 +2,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class FollowerUpdater : MonoBehaviour
 {
     [SerializeField] float followerDelay;
     [SerializeField] BoxCollider _collider;
+
+    [SerializeField] MeshRenderer bodyMesh;
+    [SerializeField] Material[] materialList;
     
     List<RecordedTransform> recordedTransforms = new();
     WaitForSeconds indexWait;
@@ -29,6 +33,8 @@ public class FollowerUpdater : MonoBehaviour
     {
         recorder.OnNewRecordCreated += HandleNewRecordCreated;
         playerDeathbox.OnPlayerDeath += HandlePlayerDeath;
+
+        bodyMesh.material = materialList[Random.Range(0, materialList.Length)];
         
         transform.position = recorder.transform.position;
         transform.rotation = recorder.transform.rotation;

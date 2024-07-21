@@ -15,6 +15,7 @@ public class UIManager : MonoBehaviour
     [Header("Main Menu")]
     [SerializeField] GameObject mainMenuObject;
     [SerializeField] TextMeshProUGUI timerText;
+    [SerializeField] TextMeshProUGUI highScoreMenuText;
     [SerializeField] float timerCountdown;
     [SerializeField] float timerDelay;
 
@@ -48,6 +49,7 @@ public class UIManager : MonoBehaviour
         pointsHudText.text = points.ToString();
         currentHighScore = PlayerPrefs.GetInt(HIGH_SCORE_KEY);
         highScoreHudText.text = currentHighScore.ToString();
+        highScoreMenuText.text = currentHighScore.ToString();
     }
 
     void Update ()
@@ -111,7 +113,10 @@ public class UIManager : MonoBehaviour
             timerText.text = Mathf.Max(0, Mathf.CeilToInt(timer)).ToString();
 
             if (timer <= 0)
+            {
+                timerText.text = "GO";
                 playerInput.SetInput(true);
+            }
             yield return null;
         }
         

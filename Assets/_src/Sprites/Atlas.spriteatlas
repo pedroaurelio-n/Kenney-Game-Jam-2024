@@ -33,14 +33,36 @@ SpriteAtlas:
     variantMultiplier: 1
     packables:
     - {fileID: 2800000, guid: df4af926236f9f946a60feee25d67a79, type: 3}
+    - {fileID: 102900000, guid: 59d335b0ff58bef4c9bd7f99fdecc801, type: 3}
+    - {fileID: 102900000, guid: ea8cd366546c124479141f8988604d94, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
+  - {fileID: 21300000, guid: bdc8a312de66b2e47be8d3be12014cbb, type: 3}
+  - {fileID: 21300000, guid: b5167014e8c6679469af826145f8abde, type: 3}
+  - {fileID: 21300000, guid: 160d1bd46e19c0f4c99fd2080fb8a31a, type: 3}
+  - {fileID: 21300000, guid: 767aeb1509ee85348b8654616b28b005, type: 3}
   - {fileID: 21300000, guid: df4af926236f9f946a60feee25d67a79, type: 3}
+  - {fileID: 21300000, guid: d14bb0a746f3dde45a820db11e368220, type: 3}
+  - {fileID: 21300000, guid: 45370c183725a5440822402a905c8cce, type: 3}
+  - {fileID: 21300000, guid: dd44a4ba93679444db637818d432c72b, type: 3}
+  - {fileID: 21300000, guid: ee757bba9e5266647b84fc7831704a7f, type: 3}
+  - {fileID: 21300000, guid: 19d62ddddefd3bb46be705c05528555d, type: 3}
+  - {fileID: 21300000, guid: 03eca09ffe76c2844ac65e6a1a4d5eb9, type: 3}
   m_PackedSpriteNamesToIndex:
-  - RmMD+7
+  - tile_0122
+  - tile_0088
+  - tile_0167
+  - button_rectangle_depth_flat
+  - JamLogo
+  - tile_0120
+  - tile_0169
+  - tile_0235
+  - tile_0237
+  - button_rectangle_flat
+  - button_rectangle_border
   m_RenderDataMap: {}
   m_Tag: Atlas
   m_IsVariant: 0

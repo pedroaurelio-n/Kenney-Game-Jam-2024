@@ -134,6 +134,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   followerDelay: 0.15
   _collider: {fileID: 3393693816573501991}
+  bodyMesh: {fileID: 1921913895489553777}
+  materialList:
+  - {fileID: 2100000, guid: 422ea66671040df48825d73183087c5a, type: 2}
+  - {fileID: 2100000, guid: 4244f65e465301d4a876c7ad961216e7, type: 2}
+  - {fileID: 2100000, guid: d63a283cb9b59a546b1347481548d79c, type: 2}
+  - {fileID: 2100000, guid: 18a27f830c07f784ea7ff828fd9f6a45, type: 2}
 --- !u!65 &3393693816573501991
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -249,8 +255,19 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 8449996119470504636, guid: 4daa0178111c99549b1bbb774d62c217,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 18a27f830c07f784ea7ff828fd9f6a45, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4daa0178111c99549b1bbb774d62c217, type: 3}
+--- !u!23 &1921913895489553777 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 8449996119470504636, guid: 4daa0178111c99549b1bbb774d62c217,
+    type: 3}
+  m_PrefabInstance: {fileID: 8063809696965672909}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7521804466861922342 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4daa0178111c99549b1bbb774d62c217,
