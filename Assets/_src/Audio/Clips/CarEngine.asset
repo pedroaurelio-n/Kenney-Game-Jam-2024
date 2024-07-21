@@ -20,5 +20,5 @@ MonoBehaviour:
   <Pausable>k__BackingField: 0
   <Loop>k__BackingField: 1
   <SpatialBlend>k__BackingField: 0
-  volumeRange: {x: 0.7, y: 0.7}
+  volumeRange: {x: 0.5, y: 0.5}
   pitchRange: {x: 0.5, y: 0.5}

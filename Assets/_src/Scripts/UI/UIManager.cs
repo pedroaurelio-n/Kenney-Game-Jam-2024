@@ -20,10 +20,11 @@ public class UIManager : MonoBehaviour
 
     [Header("HUD")]
     [SerializeField] TimeManager timeManager;
-    [SerializeField] GameObject hudObject;
+    [SerializeField] GameObject hudPanelObject;
     [SerializeField] GameObject arrowDirection;
     [SerializeField] TextMeshProUGUI pointsHudText;
     [SerializeField] TextMeshProUGUI highScoreHudText;
+    [SerializeField] GameObject minimapObject;
     
     [Header("Game Over")]
     [SerializeField] GameObject gameOverObject;
@@ -78,7 +79,7 @@ public class UIManager : MonoBehaviour
             return;
         
         music.StopAudio();
-        hudObject.SetActive(false);
+        hudPanelObject.SetActive(false);
         arrowDirection.SetActive(false);
         
         currentHighScore = PlayerPrefs.GetInt(HIGH_SCORE_KEY);
@@ -117,7 +118,8 @@ public class UIManager : MonoBehaviour
         yield return timerWait;
         
         timerText.gameObject.SetActive(false);
-        hudObject.SetActive(true);
+        hudPanelObject.SetActive(true);
+        minimapObject.SetActive(true);
         arrowDirection.SetActive(true);
         timeManager.StartTimer();
     }

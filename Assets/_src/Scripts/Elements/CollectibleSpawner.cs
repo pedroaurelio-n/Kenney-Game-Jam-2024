@@ -29,6 +29,7 @@ public class CollectibleSpawner : MonoBehaviour
 
     BoostCollectable boostObject1;
     BoostCollectable boostObject2;
+    Coroutine spawnBoostRoutine;
 
     void Start ()
     {
@@ -44,7 +45,6 @@ public class CollectibleSpawner : MonoBehaviour
         boostObject2.gameObject.SetActive(false);
 
         SpawnPoint();
-        StartCoroutine(SpawnBoostRoutine());
     }
 
     void SpawnPoint ()
@@ -68,6 +68,9 @@ public class CollectibleSpawner : MonoBehaviour
 
     void HandlePointCollected (int point, float timeToAdd)
     {
+        if (spawnBoostRoutine == null)
+            spawnBoostRoutine = StartCoroutine(SpawnBoostRoutine());
+        
         currentPoint.gameObject.SetActive(false);
         directionArrow.UpdateTarget(null);
         uiManager.UpdatePoints(point);

@@ -1,4 +1,5 @@
 using System.Collections;
+using Cinemachine;
 using UnityEngine;
 
 public class CarController : MonoBehaviour
@@ -15,6 +16,11 @@ public class CarController : MonoBehaviour
     [SerializeField] Vector3 castOffset;
     [SerializeField] float castDistance;
     [SerializeField] float castRadius;
+    
+    [Header("Camera Settings")]
+    [SerializeField] CinemachineVirtualCamera virtualCamera;
+    [SerializeField] float boostFov;
+    [SerializeField] float fovChangeSpeed;
 
     float steeringInput;
     float accelerationInput;
@@ -24,11 +30,14 @@ public class CarController : MonoBehaviour
     WaitForSeconds multiplierDuration;
     Coroutine multiplierRoutine;
 
+    float startFov;
+
     Rigidbody _rigidbody;
 
     void Awake ()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        startFov = virtualCamera.m_Lens.FieldOfView;
     }
 
     void FixedUpdate ()
@@ -36,6 +45,13 @@ public class CarController : MonoBehaviour
         CheckGround();
         Accelerate();
         Turn();
+
+        if (movementMultiplier != 1)
+            virtualCamera.m_Lens.FieldOfView =
+                Mathf.MoveTowards(virtualCamera.m_Lens.FieldOfView, boostFov, fovChangeSpeed);
+        else
+            virtualCamera.m_Lens.FieldOfView =
+                Mathf.MoveTowards(virtualCamera.m_Lens.FieldOfView, startFov, fovChangeSpeed * 1.5f);
     }
 
     public void StopMovement ()
