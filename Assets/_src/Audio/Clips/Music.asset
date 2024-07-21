@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Music
   m_EditorClassIdentifier: 
   Clips:
-  - {fileID: 8300000, guid: 33b5af536abab8340aa01265e65fbcbc, type: 3}
+  - {fileID: 8300000, guid: 4e05112433cc4774488b57ca3b6c2db2, type: 3}
+  - {fileID: 8300000, guid: b807adf9dc0682249b4f621a2042b1a0, type: 3}
   <MixerGroup>k__BackingField: {fileID: 5816565612865303275, guid: ed059d91ddab7da458965b3c564b1aec,
     type: 2}
   MaxInstances: 1

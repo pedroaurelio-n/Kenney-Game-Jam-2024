@@ -1,4 +1,5 @@
 using System.Collections;
+using Cinemachine;
 using PedroAurelio.AudioSystem;
 using TMPro;
 using UnityEngine;
@@ -18,6 +19,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI highScoreMenuText;
     [SerializeField] float timerCountdown;
     [SerializeField] float timerDelay;
+    [SerializeField] CinemachineVirtualCamera rotatingCam;
 
     [Header("HUD")]
     [SerializeField] TimeManager timeManager;
@@ -105,7 +107,8 @@ public class UIManager : MonoBehaviour
         timerText.text = ((int)timerCountdown).ToString();
         
         yield return timerWait;
-
+        rotatingCam.gameObject.SetActive(false);
+        
         float timer = timerCountdown;
         while (timer >= -0.5f)
         {

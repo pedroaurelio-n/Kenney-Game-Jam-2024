@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: CarEngine
   m_EditorClassIdentifier: 
   Clips:
-  - {fileID: 8300000, guid: d1b2ea16fb157494b8414656f15ddb22, type: 3}
+  - {fileID: 8300000, guid: 74ce618b4848189458a7eccd94785028, type: 3}
   <MixerGroup>k__BackingField: {fileID: -8741301138401188178, guid: ed059d91ddab7da458965b3c564b1aec,
     type: 2}
   MaxInstances: 1
   <Pausable>k__BackingField: 0
   <Loop>k__BackingField: 1
   <SpatialBlend>k__BackingField: 0
-  volumeRange: {x: 0.5, y: 0.5}
-  pitchRange: {x: 0.5, y: 0.5}
+  volumeRange: {x: 0.6, y: 0.6}
+  pitchRange: {x: 1, y: 1}

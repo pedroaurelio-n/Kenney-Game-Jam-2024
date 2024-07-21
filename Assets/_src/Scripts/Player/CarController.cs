@@ -1,5 +1,6 @@
 using System.Collections;
 using Cinemachine;
+using PedroAurelio.AudioSystem;
 using UnityEngine;
 
 public class CarController : MonoBehaviour
@@ -16,11 +17,23 @@ public class CarController : MonoBehaviour
     [SerializeField] Vector3 castOffset;
     [SerializeField] float castDistance;
     [SerializeField] float castRadius;
-    
+
     [Header("Camera Settings")]
     [SerializeField] CinemachineVirtualCamera virtualCamera;
     [SerializeField] float boostFov;
     [SerializeField] float fovChangeSpeed;
+    
+    [Header("Effects")]
+    [SerializeField] ParticleSystem[] driftParticles;
+    [SerializeField] float driftThreshold;
+    [SerializeField] float speedThreshold;
+    [SerializeField] ParticleSystem boostParticle;
+
+    [Header("Audio")]
+    [SerializeField] PlayAudioEvent driftSfx;
+    [SerializeField] PlayAudioEvent boostSfx;
+
+    bool dead;
 
     float steeringInput;
     float accelerationInput;
@@ -42,9 +55,13 @@ public class CarController : MonoBehaviour
 
     void FixedUpdate ()
     {
+        if (dead)
+            return;
+        
         CheckGround();
         Accelerate();
         Turn();
+        EvaluateDrift();
 
         if (movementMultiplier != 1)
             virtualCamera.m_Lens.FieldOfView =
@@ -56,8 +73,11 @@ public class CarController : MonoBehaviour
 
     public void StopMovement ()
     {
+        dead = true;
+        driftParticles[0].Stop();
+        driftParticles[1].Stop();
+        driftSfx.StopAudio();
         _rigidbody.velocity = Vector3.zero;
-        _rigidbody.constraints = RigidbodyConstraints.FreezeAll;
     }
 
     public void SetAccelerationInput (float value) => accelerationInput = value;
@@ -67,10 +87,15 @@ public class CarController : MonoBehaviour
     public void SetMovementMultiplier (float multiplier, float duration)
     {
         if (multiplierRoutine != null)
+        {
             StopCoroutine(multiplierRoutine);
+            boostSfx.StopAudio();
+        }
         
         multiplierDuration ??= new WaitForSeconds(duration);
         movementMultiplier = multiplier;
+        boostParticle.Play();
+        boostSfx.PlayAudio();
         
         multiplierRoutine = StartCoroutine(ResetMultiplier());
     }
@@ -88,6 +113,11 @@ public class CarController : MonoBehaviour
             Quaternion rotationDirection = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
             Quaternion newRotation = Quaternion.RotateTowards(transform.rotation, rotationDirection, rotationSpeed);
             transform.rotation = newRotation;
+        }
+        else
+        {
+            driftParticles[0].Stop();
+            driftParticles[1].Stop();
         }
     }
 
@@ -111,11 +141,30 @@ public class CarController : MonoBehaviour
         
         transform.rotation = Quaternion.Euler(transform.eulerAngles + new Vector3(0f, targetTurn, 0f));
     }
+
+    void EvaluateDrift ()
+    {
+        float dotProduct = Vector3.Dot(_rigidbody.velocity.normalized, transform.forward.normalized);
+        if (dotProduct <= driftThreshold && _rigidbody.velocity.magnitude >= speedThreshold)
+        {
+            driftParticles[0].Play();
+            driftParticles[1].Play();
+            driftSfx.PlayAudio(true);
+        }
+        else
+        {
+            driftParticles[0].Stop();
+            driftParticles[1].Stop();
+            driftSfx.StopAudio();
+        }
+    }
     
     IEnumerator ResetMultiplier ()
     {
         yield return multiplierDuration;
         movementMultiplier = 1f;
+        boostParticle.Stop();
+        boostSfx.StopAudio();
         multiplierRoutine = null;
     }
 

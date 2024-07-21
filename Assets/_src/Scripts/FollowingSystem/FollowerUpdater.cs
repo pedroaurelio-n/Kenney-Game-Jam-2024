@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using PedroAurelio.AudioSystem;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -11,9 +12,13 @@ public class FollowerUpdater : MonoBehaviour
 
     [SerializeField] MeshRenderer bodyMesh;
     [SerializeField] Material[] materialList;
-    
+    [SerializeField] ParticleSystem deathParticle;
+    [SerializeField] Material deathMaterial;
+    [SerializeField] PlayAudioEvent deathAudio;
+
     List<RecordedTransform> recordedTransforms = new();
     WaitForSeconds indexWait;
+    WaitForSeconds indexMultipliedWait;
     Coroutine delayRoutine;
     
     int transformIndex;
@@ -40,6 +45,7 @@ public class FollowerUpdater : MonoBehaviour
         transform.rotation = recorder.transform.rotation;
 
         indexWait = new WaitForSeconds(index * followerDelay);
+        indexMultipliedWait = new WaitForSeconds(index * followerDelay * 3);
         delayRoutine = StartCoroutine(UpdateRoutine());
     }
 
@@ -51,6 +57,8 @@ public class FollowerUpdater : MonoBehaviour
         
         if (delayRoutine != null)
             StopCoroutine(delayRoutine);
+
+        StartCoroutine(DeathRoutine());
     }
 
     IEnumerator UpdateRoutine ()
@@ -58,5 +66,13 @@ public class FollowerUpdater : MonoBehaviour
         yield return indexWait;
         _collider.enabled = true;
         canUpdate = true;
+    }
+
+    IEnumerator DeathRoutine ()
+    {
+        yield return indexMultipliedWait;
+        bodyMesh.material = deathMaterial;
+        deathParticle.Play();;
+        deathAudio.PlayAudio();
     }
 }
